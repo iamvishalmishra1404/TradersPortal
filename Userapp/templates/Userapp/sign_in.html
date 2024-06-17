@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Authentication Example</title>
+    <!-- Import Firebase SDK using ES Modules -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyAnjw2_au6cB_WKHyTK6fq66RLPjXwFlYY",
+        authDomain: "traderportal-d3c3a.firebaseapp.com",
+        projectId: "traderportal-d3c3a",
+        storageBucket: "traderportal-d3c3a.appspot.com",
+        messagingSenderId: "803996928596",
+        appId: "1:803996928596:web:ad95e830e12eb2913fbbc1",
+        measurementId: "G-028WLTWMSS"
+  };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Define signInWithGoogle function in global scope
+        window.signInWithGoogle = function() {
+            const provider = new GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // Handle successful sign-in here
+                    console.log(result);
+                })
+                .catch((error) => {
+                    // Handle errors here
+                    console.error(error);
+                });
+        };
+    </script>
+</head>
+<body>
+    <button onclick="signInWithGoogle()">Sign in with Google</button>
+</body>
+</html>
