@@ -29,5 +29,6 @@ urlpatterns = [
     path('home/',views.home,name = 'home'),
     path('api/search/', views.CompanySearchAPIView.as_view(), name='company-search'),
     path('api/watchlist/', views.AddToWatchlistAPIView.as_view(), name='watchlist-create'),
+    path('price/search/', views.GetPriceAPIView.as_view(), name='price-search'),
 
 ]

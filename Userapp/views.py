@@ -2,8 +2,8 @@ from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from rest_framework import generics,status
 from rest_framework.permissions import IsAuthenticated
-from .models import Company, Watchlist
-from .serializers import CompanySerializer, WatchlistSerializer
+from .models import Company, Watchlist,Price
+from .serializers import CompanySerializer, WatchlistSerializer , PriceSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
@@ -50,3 +50,13 @@ class AddToWatchlistAPIView(APIView):
         watchlist.save()
 
         return Response({'status': 'Company added to watchlist'}, status=status.HTTP_200_OK)
+    
+class GetPriceAPIView(generics.ListAPIView):
+    serializer_class = PriceSerializer
+
+    def get_queryset(self):
+        queryset = Price.objects.all()
+        query = self.request.query_params.get('q', None)
+        if query:
+            queryset = Price.objects.filter(symbol__icontains=query).values('price')
+        return queryset
